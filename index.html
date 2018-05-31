@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TronWallet</title>
+<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+<meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta http-equiv=X-UA-Compatible content=edge>
+<link href="/static/css/font-awesome.min.css" rel="stylesheet" charset="utf-8">
+<link rel="stylesheet" href="/static/css/popup.css" charset="utf-8">
+<link rel="stylesheet" href="/static/css/toastr.min.css" charset="utf-8">
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/toastr.min.js"></script>
+<script src="/static/js/jquery-qrcode.min.js"></script>
+<script src="/static/js/popup-page.js"></script>
+<script src="/static/js/clipboard.min.js"></script>
+</head>
+<body>
+<div id="loading" style="display:none" class="loading">
+    <img src="/static/imgs/loading.gif" width="33" alt="">
+</div>
+<section id="main-section" class="section">
+  <section id="tab-content-wrap">
+    <section id="tools-tab-content" class="tab-content">
+	  <div class="inner market-content" id="market-container">
+	  </div>
+	</section>
+	<div id="accounts-tab-content" class="tab-content">
+	  <div class="inner news-content" id="news-container">
+			
+	  </div>
+	</div> 
+	<div id="messages-tab-content" class="tab-content visible">
+		<div class="main-header">
+		    <div class="icon-container">
+				<img src="/static/imgs/head/1.png" class="head-icon">
+				<div class="wallet-address" id="copy-container" title="Click to copy">
+					<span id="ower-address"></span><i class="fa fa-clipboard" style="margin-left: 8px;"></i>
+				</div>
+			</div>
+			<div class="asset-desc">
+				<div title="27i6jJR5HwUoixS4Q64Ske5Jgjg1HjXLRSw">
+					<span class="dec-small">Total Asset</span><br>
+					<span class="dec-big">≈ <span id="totalAssetValue"></span>$</span>
+				</div>
+				<img src="/static/imgs/add.png" class="add-icon">
+			</div>
+			
+		</div>
+		<ul class="common-font" id="asset-list">	
+		</ul>
+	</div>
+    <div id="settings-tab-content" class="tab-content">
+	  <div class="content-wrap" style="overflow:auto;">
+		<div class="cell-group">
+		  
+		  <div class="cell renew-cell" id="getFreeTRX">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-renew.png">
+			<label>get test trx</label>
+		  </div>
+		  <div class="cell invite-cell" id="voteContainer">
+			<a href="http://tron123.top/wallet#vote" target="_blank"><img class="icon fit-dpi" src="/static/imgs/icon-settings-invite.png">
+			<label>vote witness</label></a>
+		  </div>
+		</div>
+		<div class="cell-group">
+		  
+		  <div class="cell renew-cell" id="freezeContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-renew.png">
+			<label>freeze balance</label>
+		  </div>
+		  <div class="cell invite-cell" id="unFreezeContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-renew.png">
+			<label>unfreeze balance</label>
+		  </div>
+		</div>
+		<div class="cell-group">
+		  <div class="cell notification-settings-cell" id="pushSettingContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-notification.png">
+			<label>push setting</label>
+			<img class="right arrow" src="/static/imgs/arrow-right.png">
+		  </div>
+		  <div  class="cell general-settings-cell">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-switches.png">
+			<label>functional switch</label>
+			<img class="right arrow" src="/static/imgs/arrow-right.png">
+		  </div>
+		  <div class="cell update-cell" id="updateContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-update.png">
+			<label>check update（<span class="version">0.0.1</span>）</label>
+			<span class="right has-new hide">new</span>
+			<span class="right is-latest ">latest</span>
+		  </div>
+		  <div  class="env-switcher"></div>
+		</div>
+		<div class="cell-group">
+		  <div class="cell logout-cell" id="log-out">LOG OUT</div>
+		</div>
+	  </div>
+	</div>
+  </section>
+  <footer class="tab-bar">
+	<div id="messages-tab" class="tab active">
+      <img class="icon fit-dpi" src="/static/imgs/popup/tab-accounts.png">
+      <img class="icon active fit-dpi" src="/static/imgs/popup/tab-accounts-active.png">
+      <span>Account</span>
+    </div>
+    <div id="tools-tab" class="tab ">
+      <img class="icon fit-dpi" src="/static/imgs/popup/tab-tools.png">
+      <img class="icon active fit-dpi" src="/static/imgs/popup/tab-tools-active.png">
+      <span>Market</span>
+    </div>
+
+    <div id="accounts-tab" class="tab ">
+      <img class="icon fit-dpi" src="/static/imgs/popup/tab-messages.png">
+      <img class="icon active fit-dpi" src="/static/imgs/popup/tab-messages-active.png">
+      <span>News</span>
+    </div>
+    <div id="settings-tab" class="tab">
+      <img class="icon fit-dpi" src="/static/imgs/popup/tab-settings.png">
+      <img class="icon active fit-dpi" src="/static/imgs/popup/tab-settings-active.png">
+      <span>Setting</span>
+    </div>
+    <a href=""></a>
+  </footer>
+</section>
+<section id="login-section" class="section visible">
+  <header class="header">
+    <img class="logo" src="/static/imgs/icon.png">
+  </header>
+  <img class="logo-banner" src="/static/imgs/tron-banner.png">
+  <p> 
+	<input type="password" id="password-box" placeholder="enter password" class="large-input" > </p>
+  <button id="login-btn">LOG IN</button>
+  <p class="copy-span" id="login-to">generate new account</p>
+</section>
+<section id="register-section" class="section">
+  <header class="header">
+    <img class="logo" src="/static/imgs/icon.png">
+  </header>
+  <img class="logo-banner" src="/static/imgs/tron-banner.png">
+  <p> 
+	<input type="text" id="register-address" class="large-input" > </p>
+	<p> 
+	<input type="text" id="register-password" class="large-input" > </p>
+  <button id="register-ok-btn">OK</button><button id="register-next-btn" style="margin-left:20px;"> NEXT</button>
+  <p class="copy-span" id="register-to" style="margin-top:60px;">Already has account,log in</p>
+</section>
+<section id="asset-select-section" class="section settings-section float-section ">
+  <header class="float-section-header">
+    <a view-ref="back" class="back-btn" id="asset-select-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    Add Assets
+  </header>
+  <ul view-ref="settingList" class="setting-items-list" id="asset-container">
+  </ul>
+</section>
+<section id="asset-detail-section" class="section settings-section float-section ">
+  <header class="float-section-header">
+    <a view-ref="back" class="back-btn" id="asset-detail-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    <span id="asset-desc">TRX</span>
+	<span id="asset-number" style="display:none"></span>
+  </header>
+	<div class="asset-head">
+		<img src="/static/imgs/tron.png" class="asset-icon" id="asset-icon">
+		<div>
+			<span class="dec-large" id="asset-num"></span>
+		</div>
+		<div class="trans-desc">TRANSACTIONS</div>
+	</div>
+	<div class="empty-wrap" id="empty-wrap">
+		<img src="/static/imgs/empty.png" class="icon">
+	</div>
+  <ul class="trasaction-items-list margin-footer" id="record-container">
+		
+  </ul>
+  <footer class="tab-bar">
+    <div id="send-tab" class="max-tab">
+      <span><i class="fa fa-upload" style="margin-right: 8px;"></i>send</span>
+    </div>
+    <div id="receive-tab" class="max-tab">
+      <span><i class="fa fa-download" style="margin-right: 8px;"></i>receive</span>
+    </div>
+   
+  </footer>
+</section>
+<section id="asset-send-section" class="section settings-section float-section">
+  <header class="float-section-header">
+    <a class="back-btn" id="asset-send-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    Send TRX
+  </header>
+	<div class="send-form">
+		<div style="text-align:center">
+			<span class="dec-large" id="asset-remain"></span>
+			<span class="dec-small">available</span>
+		</div>
+		<div class="send-form-row">
+			<div class="send-form-label">From:</div>
+			<div class="send-form-field"><input id="send-from-address" class="form-input" value="" readonly size="1.2"></div>
+		</div>
+		<div class="send-form-row">
+			<div class="send-form-label">To:</div>
+			<div class="send-form-field"><input id="send-to-address" class="form-input" value="" placeholder="address.." size="1.2"></div>
+		</div>
+		
+		<div class="send-form-row">
+			<div class="send-form-label">Amount:</div>
+			<div class="send-form-field"><input id="send-amount" class="form-input" value="0" placeholder="0" size="1.2" type="number"></div>
+		</div>
+		<div class="send-form-row">
+			<span class="error-tips" id="error-tips">Fail, no more bandwith!</span>
+		</div>
+		<button class="submit-btn" id="send-btn">OK</button>
+	</div>  
+</section>
+<section id="asset-receive-section" class="section settings-section float-section">
+  <header class="float-section-header">
+    <a class="back-btn" id="asset-receive-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    <span id="receive-title">Receive TRX</span>
+  </header>
+	<div class="send-form">
+		
+		<div class="send-form-row">
+			<div class="send-form-label">To:</div>
+			<div class="send-form-field"><input readonly id="receive-to-address" class="form-input" value="" placeholder="address.." size="1.2"></div>
+		</div>
+		
+		<div class="send-form-row">
+			<div class="send-form-label">Amount:</div>
+			<div class="send-form-field"><input id="receive-amount" class="form-input" value="0" placeholder="0" size="1.2" type="number"></div>
+		</div>
+		<div class="qr-container"><div id="qrcode"></div></div>
+		<div style="text-align:center;margin-top:20px;">
+			<span id="copy-qr" class="copy-span" >click here to copy url</span>
+		</div>
+	</div>  
+</section>
+<section id="asset-freeze-section" class="section settings-section float-section">
+  <header class="float-section-header">
+    <a class="back-btn" id="asset-freeze-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    Freeze TRX
+  </header>
+	<div class="send-form">
+		<div style="text-align:center">
+			<span class="dec-large" id="asset-remain-freeze"></span>
+			<span class="dec-small">available</span>
+		</div>
+		
+		<div class="send-form-row">
+			<div class="send-form-label">Amount:</div>
+			<div class="send-form-field"><input id="freeze-amount" class="form-input" value="0" placeholder="0" size="1.2" type="number"></div>
+		</div>
+		<div class="send-form-row">
+			<span class="error-tips" id="freeze-error-tips">Fail!</span>
+		</div>
+		<button class="submit-btn" id="freeze-btn">OK</button>
+	</div>  
+</section>
+<section id="asset-pushsetting-section" class="section settings-section float-section ">
+  <header class="float-section-header">
+    <a view-ref="back" class="back-btn" id="asset-pushsetting-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    Push Setting
+  </header>
+  <ul class="setting-items-list">
+	<li class="setting-li on">
+      <span class="text">market push</span>
+      <div class="checkbox">
+        <input type="checkbox" class="toggle">
+        <label class="label"></label>
+      </div>
+    </li>
+	<li class="setting-li on">
+      <span class="text">news push</span>
+      <div class="checkbox">
+        <input type="checkbox" class="toggle">
+        <label class="label"></label>
+      </div>
+    </li>
+  </ul>
+</section>
+</body>
+</html>
