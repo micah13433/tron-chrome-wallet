@@ -15,7 +15,6 @@ $(function() {
 	chrome.storage.sync.get({displayAsset:[]},function(items){
 		assetGroup = items.displayAsset;
 		$('.setting-li').click(function(){
-			alert(1);
 			if($(this).hasClass("on")){
 				return;
 			}

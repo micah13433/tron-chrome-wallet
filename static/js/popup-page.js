@@ -1,4 +1,4 @@
-var baseURL = "http://localhost";
+var baseURL = "http://tron123.top";
 $(function() {
 	//chrome.storage.sync.clear(function(){});
 
@@ -258,7 +258,7 @@ $(function() {
 	$('#send-btn').click(function(){
 		var xhr = new XMLHttpRequest();
 		var address = $("#send-to-address").val();
-		if(address.length != 35){
+		if(address.length != 34){
 			$("#send-to-address").focus();
 			return false;
 		}
@@ -301,13 +301,16 @@ $(function() {
 				if(res.code && res.code == 1){					
 					$("#loading").hide();
 					toastr.success("Success!");
+					toastr.clear();
 				}else{
 					$("#loading").hide();
 					toastr.error("Fail!");
+					toastr.clear();
 				}
 			}else{
 				$("#loading").hide();
 				toastr.error("Fail!");
+				toastr.clear();
 			}
 		}
 		xhr.send();
@@ -328,13 +331,16 @@ $(function() {
 				if(res.code && res.code == 1){					
 					$("#loading").hide();
 					toastr.success("Success!");
+					toastr.clear();
 				}else{
 					toastr.error("Fail!");
 					$("#loading").hide();
+					toastr.clear();
 				}
 			}else{
 				toastr.error("Fail!");
-				$("#loading").hide();	
+				$("#loading").hide();
+				toastr.clear();
 			}
 		}
 		xhr.send();
@@ -351,13 +357,16 @@ $(function() {
 				if(res.code && res.code == 1){					
 					$("#loading").hide();
 					toastr.success("Success!");
+					toastr.clear();
 				}else{
 					toastr.error("Fail!");
 					$("#loading").hide();
+					toastr.clear();
 				}
 			}else{
 				toastr.error("Fail!");
-				$("#loading").hide();	
+				$("#loading").hide();
+				toastr.clear();
 			}
 		}
 		xhr.send();
@@ -373,14 +382,17 @@ $(function() {
 				var res = JSON.parse(xhr.responseText);
 				if(res.code && res.code == 1){					
 					$("#loading").hide();
-					toastr.success("Success!");
+					toastr.success("Already latest!");
+					toastr.clear();
 				}else{
-					toastr.error("Fail!");
+					toastr.success("Already latest!");
 					$("#loading").hide();
+					toastr.clear();
 				}
 			}else{
-				toastr.error("Fail!");
+				toastr.success("Already latest!");
 				$("#loading").hide();	
+				toastr.clear();
 			}
 		}
 		xhr.send();
