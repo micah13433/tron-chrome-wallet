@@ -2,9 +2,10 @@ $(function() {
 	var page = 1;
 	$('#fetch-more').click(function(){
 		page++;
-		$('#fetch-more').html("loading...");
+		$('#fetch-more').html("加载中...");
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", baseURL + "/wallet/getTransactionHistory?page=" + page, true);
+		var extraParam = "&isMainnet=" + window.localStorage.getItem("isMainnet");
+		xhr.open("GET", baseURL + "/wallet/getTransactionHistory?page=" + page + extraParam, true);
 		xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 		  var res = JSON.parse(xhr.responseText);
@@ -25,6 +26,7 @@ $(function() {
 			if(res.list.length == 10){
 				resultHtml += ("<li class=\"trasaction-li\"  id=\"fetch-more\"><i class=\"fa fa-angle-double-down fa-2x\"></i></li>");
 			}
+			injectCustomJs('injectTransDetail');
 			$("#record-container").html($("#record-container").html() + resultHtml);
 		  }else{
 			$('#fetch-more').html("<i class=\"fa fa-angle-double-down fa-2x\" style=\"margin-left: 120px;\"></i>");

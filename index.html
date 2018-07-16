@@ -9,10 +9,11 @@
 <link rel="stylesheet" href="/static/css/popup.css" charset="utf-8">
 <link rel="stylesheet" href="/static/css/toastr.min.css" charset="utf-8">
 <script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/toastr.min.js"></script>
 <script src="/static/js/jquery-qrcode.min.js"></script>
-<script src="/static/js/popup-page.js"></script>
+<script src="/static/laydate/laydate.js"></script>
 <script src="/static/js/clipboard.min.js"></script>
+<script src="/static/js/toastr.min.js"></script>
+<script src="/static/js/popup-page.js"></script>
 </head>
 <body>
 <div id="loading" style="display:none" class="loading">
@@ -33,13 +34,13 @@
 		<div class="main-header">
 		    <div class="icon-container">
 				<img src="/static/imgs/head/1.png" class="head-icon">
-				<div class="wallet-address" id="copy-container" title="Click to copy">
+				<div class="wallet-address" id="copy-container" title="点击即可复制">
 					<span id="ower-address"></span><i class="fa fa-clipboard" style="margin-left: 8px;"></i>
 				</div>
 			</div>
 			<div class="asset-desc">
 				<div title="27i6jJR5HwUoixS4Q64Ske5Jgjg1HjXLRSw">
-					<span class="dec-small">Total Asset</span><br>
+					<span class="dec-small">总资产</span><br>
 					<span class="dec-big">≈ <span id="totalAssetValue"></span>$</span>
 				</div>
 				<img src="/static/imgs/add.png" class="add-icon">
@@ -51,49 +52,47 @@
 	</div>
     <div id="settings-tab-content" class="tab-content">
 	  <div class="content-wrap" style="overflow:auto;">
-		<div class="cell-group">
-		  
-		  <div class="cell renew-cell" id="getFreeTRX">
-			<img class="icon fit-dpi" src="/static/imgs/icon-settings-renew.png">
-			<label>get test trx</label>
-		  </div>
-		  <div class="cell invite-cell" id="voteContainer">
-			<a href="http://tron123.top/wallet#vote" target="_blank"><img class="icon fit-dpi" src="/static/imgs/icon-settings-invite.png">
-			<label>vote witness</label></a>
-		  </div>
-		</div>
-		<div class="cell-group">
+	    <div class="cell-group">
 		  
 		  <div class="cell renew-cell" id="freezeContainer">
 			<img class="icon fit-dpi" src="/static/imgs/icon-settings-renew.png">
-			<label>freeze balance</label>
+			<label>余额冻结</label>
 		  </div>
 		  <div class="cell invite-cell" id="unFreezeContainer">
 			<img class="icon fit-dpi" src="/static/imgs/icon-settings-renew.png">
-			<label>unfreeze balance</label>
+			<label>余额解冻</label>
 		  </div>
 		</div>
 		<div class="cell-group">
+		  
+		  <div class="cell invite-cell" id="voteContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-invite.png">
+			<label>代表投票</label>
+		  </div>
+		  <div class="cell invite-cell" id="assetContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-switches.png">
+			<label>token购买</label>
+		  </div>
+		  <div class="cell invite-cell" id="issueContainer">
+			<img class="icon fit-dpi" src="/static/imgs/icon-settings-switches.png">
+			<label>token发行</label>
+		  </div>
+		</div>		
+		<div class="cell-group">
 		  <div class="cell notification-settings-cell" id="pushSettingContainer">
 			<img class="icon fit-dpi" src="/static/imgs/icon-settings-notification.png">
-			<label>push setting</label>
-			<img class="right arrow" src="/static/imgs/arrow-right.png">
-		  </div>
-		  <div  class="cell general-settings-cell">
-			<img class="icon fit-dpi" src="/static/imgs/icon-settings-switches.png">
-			<label>functional switch</label>
+			<label>推送设置</label>
 			<img class="right arrow" src="/static/imgs/arrow-right.png">
 		  </div>
 		  <div class="cell update-cell" id="updateContainer">
 			<img class="icon fit-dpi" src="/static/imgs/icon-settings-update.png">
-			<label>check update（<span class="version">0.0.1</span>）</label>
-			<span class="right has-new hide">new</span>
-			<span class="right is-latest ">latest</span>
+			<label>检查更新（<span class="version" id="version">0.0.3</span>）</label>
+			<span class="right has-new hide" id="version-new">new</span>
 		  </div>
 		  <div  class="env-switcher"></div>
 		</div>
 		<div class="cell-group">
-		  <div class="cell logout-cell" id="log-out">LOG OUT</div>
+		  <div class="cell logout-cell" id="log-out">退出</div>
 		</div>
 	  </div>
 	</div>
@@ -102,23 +101,23 @@
 	<div id="messages-tab" class="tab active">
       <img class="icon fit-dpi" src="/static/imgs/popup/tab-accounts.png">
       <img class="icon active fit-dpi" src="/static/imgs/popup/tab-accounts-active.png">
-      <span>Account</span>
+      <span>资产</span>
     </div>
     <div id="tools-tab" class="tab ">
       <img class="icon fit-dpi" src="/static/imgs/popup/tab-tools.png">
       <img class="icon active fit-dpi" src="/static/imgs/popup/tab-tools-active.png">
-      <span>Market</span>
+      <span>行情</span>
     </div>
 
     <div id="accounts-tab" class="tab ">
       <img class="icon fit-dpi" src="/static/imgs/popup/tab-messages.png">
       <img class="icon active fit-dpi" src="/static/imgs/popup/tab-messages-active.png">
-      <span>News</span>
+      <span>快讯</span>
     </div>
     <div id="settings-tab" class="tab">
       <img class="icon fit-dpi" src="/static/imgs/popup/tab-settings.png">
       <img class="icon active fit-dpi" src="/static/imgs/popup/tab-settings-active.png">
-      <span>Setting</span>
+      <span>更多</span>
     </div>
     <a href=""></a>
   </footer>
@@ -126,31 +125,47 @@
 <section id="login-section" class="section visible">
   <header class="header">
     <img class="logo" src="/static/imgs/icon.png">
+	<div class="dropdown">
+		<div class="btn dropdown-toggle" id="dropdown"><span id="network">主干网</span><i class="fa fa-caret-down" style="margin-left: 8px;"></i></div>
+		<div class="dropdown-menu api" id="dropdown-menu" net=0>
+			<div class="active dropdown-item" data-i=0 id="mainEle">主干网</div>
+			<div class="dropdown-item" data-i=1 id="testEle">测试网</div>
+		</div>
+	</div>
   </header>
   <img class="logo-banner" src="/static/imgs/tron-banner.png">
   <p> 
-	<input type="password" id="password-box" placeholder="enter password" class="large-input" > </p>
-  <button id="login-btn">LOG IN</button>
-  <p class="copy-span" id="login-to">generate new account</p>
+	<input type="password" id="password-box" placeholder="输入私钥..." class="large-input" > </p>
+  <button id="login-btn">登录</button>
+  <p class="copy-span" id="login-to">注册新的账号</p>
 </section>
 <section id="register-section" class="section">
   <header class="header">
     <img class="logo" src="/static/imgs/icon.png">
+	<div class="dropdown">
+		<div class="btn dropdown-toggle" id="dropdownReg"><span id="networkReg">主干网</span><i class="fa fa-caret-down" style="margin-left: 8px;"></i></div>
+		<div class="dropdown-menu api" id="dropdown-menuReg" net=0>
+			<div class="active dropdown-item" data-i=0 id="mainEleReg">主干网</div>
+			<div class="dropdown-item" data-i=1 id="testEleReg">测试网</div>
+		</div>
+	</div>
   </header>
-  <img class="logo-banner" src="/static/imgs/tron-banner.png">
+  <img class="logo-banner-register" src="/static/imgs/tron-banner.png">
+  <p class="register-desc"> 地址:</p>
   <p> 
 	<input type="text" id="register-address" class="large-input" > </p>
+	<p class="register-desc">私钥:</p>
 	<p> 
 	<input type="text" id="register-password" class="large-input" > </p>
-  <button id="register-ok-btn">OK</button><button id="register-next-btn" style="margin-left:20px;"> NEXT</button>
-  <p class="copy-span" id="register-to" style="margin-top:60px;">Already has account,log in</p>
+  <button id="register-ok-btn">确定</button><button id="register-next-btn" style="margin-left:20px;">换一个</button>
+  <p class="copy-span" id="register-to" style="margin-top:40px;">已有账号？登录</p>
 </section>
 <section id="asset-select-section" class="section settings-section float-section ">
   <header class="float-section-header">
     <a view-ref="back" class="back-btn" id="asset-select-back"><img src="/static/imgs/popup/arrow-left.png"></a>
-    Add Assets
+    增加Token
   </header>
-  <ul view-ref="settingList" class="setting-items-list" id="asset-container">
+  <ul view-ref="settingList" class="setting-items-list" id="asset-container" style="height:480px;">
   </ul>
 </section>
 <section id="asset-detail-section" class="section settings-section float-section ">
@@ -164,7 +179,7 @@
 		<div>
 			<span class="dec-large" id="asset-num"></span>
 		</div>
-		<div class="trans-desc">TRANSACTIONS</div>
+		<div class="trans-desc">交易记录</div>
 	</div>
 	<div class="empty-wrap" id="empty-wrap">
 		<img src="/static/imgs/empty.png" class="icon">
@@ -174,10 +189,10 @@
   </ul>
   <footer class="tab-bar">
     <div id="send-tab" class="max-tab">
-      <span><i class="fa fa-upload" style="margin-right: 8px;"></i>send</span>
+      <span><i class="fa fa-upload" style="margin-right: 8px;"></i>转账</span>
     </div>
     <div id="receive-tab" class="max-tab">
-      <span><i class="fa fa-download" style="margin-right: 8px;"></i>receive</span>
+      <span><i class="fa fa-download" style="margin-right: 8px;"></i>收款</span>
     </div>
    
   </footer>
@@ -185,92 +200,188 @@
 <section id="asset-send-section" class="section settings-section float-section">
   <header class="float-section-header">
     <a class="back-btn" id="asset-send-back"><img src="/static/imgs/popup/arrow-left.png"></a>
-    Send TRX
+    <span id="send-title">TRX转账</span>
   </header>
 	<div class="send-form">
 		<div style="text-align:center">
 			<span class="dec-large" id="asset-remain"></span>
-			<span class="dec-small">available</span>
+			<span class="dec-small">余额</span>
 		</div>
 		<div class="send-form-row">
-			<div class="send-form-label">From:</div>
+			<span class="error-tips">请确保地址正确，一旦转出无法撤销！</span>
+		</div>
+		<div class="send-form-row">
+			<div class="send-form-label">源地址:</div>
 			<div class="send-form-field"><input id="send-from-address" class="form-input" value="" readonly size="1.2"></div>
 		</div>
 		<div class="send-form-row">
-			<div class="send-form-label">To:</div>
-			<div class="send-form-field"><input id="send-to-address" class="form-input" value="" placeholder="address.." size="1.2"></div>
+			<div class="send-form-label">转账至:</div>
+			<div class="send-form-field"><input id="send-to-address" class="form-input" value="" placeholder="目标账号地址.." size="1.0"></div>
 		</div>
 		
 		<div class="send-form-row">
-			<div class="send-form-label">Amount:</div>
-			<div class="send-form-field"><input id="send-amount" class="form-input" value="0" placeholder="0" size="1.2" type="number"></div>
+			<div class="send-form-label">转账额:</div>
+			<div class="send-form-field"><input id="send-amount" class="form-input" value="" placeholder="0" size="1.2" type="number"></div>
 		</div>
-		<div class="send-form-row">
-			<span class="error-tips" id="error-tips">Fail, no more bandwith!</span>
-		</div>
-		<button class="submit-btn" id="send-btn">OK</button>
+		<button class="submit-btn" id="send-btn">确定</button>
 	</div>  
 </section>
 <section id="asset-receive-section" class="section settings-section float-section">
   <header class="float-section-header">
     <a class="back-btn" id="asset-receive-back"><img src="/static/imgs/popup/arrow-left.png"></a>
-    <span id="receive-title">Receive TRX</span>
+    <span id="receive-title">TRX收款</span>
   </header>
 	<div class="send-form">
 		
 		<div class="send-form-row">
-			<div class="send-form-label">To:</div>
+			<div class="send-form-label">收款至:</div>
 			<div class="send-form-field"><input readonly id="receive-to-address" class="form-input" value="" placeholder="address.." size="1.2"></div>
 		</div>
 		
 		<div class="send-form-row">
-			<div class="send-form-label">Amount:</div>
-			<div class="send-form-field"><input id="receive-amount" class="form-input" value="0" placeholder="0" size="1.2" type="number"></div>
+			<div class="send-form-label">收款额:</div>
+			<div class="send-form-field"><input id="receive-amount" class="form-input" value="" placeholder="0" size="1.2" type="number"></div>
 		</div>
 		<div class="qr-container"><div id="qrcode"></div></div>
 		<div style="text-align:center;margin-top:20px;">
-			<span id="copy-qr" class="copy-span" >click here to copy url</span>
+			<span id="copy-qr" class="copy-span" >点击复制地址</span>
 		</div>
 	</div>  
 </section>
 <section id="asset-freeze-section" class="section settings-section float-section">
   <header class="float-section-header">
     <a class="back-btn" id="asset-freeze-back"><img src="/static/imgs/popup/arrow-left.png"></a>
-    Freeze TRX
+    冻结TRX
   </header>
 	<div class="send-form">
 		<div style="text-align:center">
 			<span class="dec-large" id="asset-remain-freeze"></span>
-			<span class="dec-small">available</span>
+			<span class="dec-small">余额</span>
+		</div>
+		<div class="send-form-row">
+			<span class="error-tips" id="freeze-error-tips">冻结额只能为整数，且最少冻结时长为3天</span>
+		</div>
+		<div class="send-form-row">
+			<div class="send-form-label">冻结额:</div>
+			<div class="send-form-field"><input id="freeze-amount" class="form-input" value="" placeholder="0" size="1.2" type="number"></div>
+		</div>
+		<button class="submit-btn" id="freeze-btn">确定</button>
+	</div>  
+</section>
+<section id="vote-section" class="section settings-section float-section ">
+  <header class="float-section-header">
+    <a view-ref="back" class="back-btn" id="vote-section-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    代表投票
+  </header>
+  <div class="vote-tip-row">
+		<span class="error-tips">余额冻结可增加投票数</span>
+  </div>
+</section>
+<section id="assetList-section" class="section settings-section float-section ">
+  <header class="float-section-header">
+    <a view-ref="back" class="back-btn" id="assetList-section-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    token列表
+  </header>
+  <ul class="setting-items-list" id="assetInner-list" style="height:480px;">
+	
+  </ul>
+</section>
+<section id="asset-buy-section" class="section settings-section float-section">
+  <header class="float-section-header">
+    <a class="back-btn" id="asset-buy-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    token购买
+  </header>
+	<div class="send-form">
+		<div class="asset-form-row">
+			<div class="asset-form-label">名称:</div>
+			<div class="asset-form-field" id="asset-name"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="asset-form-label">网址:</div>
+			<div class="asset-form-field" id="asset-url"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="asset-form-label">发行量:</div>
+			<div class="asset-form-field" id="asset-supply"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="asset-form-label">单价:</div>
+			<div class="asset-form-field" id="asset-price"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="asset-form-label">开始日期:</div>
+			<div class="asset-form-field" id="asset-start"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="asset-form-label">截止日期:</div>
+			<div class="asset-form-field" id="asset-end"></div>
 		</div>
 		
 		<div class="send-form-row">
-			<div class="send-form-label">Amount:</div>
-			<div class="send-form-field"><input id="freeze-amount" class="form-input" value="0" placeholder="0" size="1.2" type="number"></div>
+			<div class="asset-form-label">购买数额:</div>
+			<div class="send-form-field"><input id="asset-amount" class="form-input" value="" placeholder="0" size="1.2" type="number"></div>
 		</div>
+		<button class="submit-btn" id="asset-buy-btn" >确定</button>
+	</div>  
+</section>
+<section id="asset-issue-section" class="section settings-section float-section">
+  <header class="float-section-header">
+    <a class="back-btn" id="asset-issue-back"><img src="/static/imgs/popup/arrow-left.png"></a>
+    token发行
+  </header>
+	<div class="send-form">
+		<div class="vote-tip-row">
+			<span class="error-tips" id="freeze-error-tips">注意：发行资产需要消耗1024个TRX。</span>
+		</div>
+		<div class="asset-form-row">
+			<div class="assetIssue-form-label">名称:</div>
+			<div class="send-form-field"><input id="assetIssue-name" class="assetIssue-input" value="" placeholder="" size="1.2" type="text" maxlength=15></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="assetIssue-form-label">网址:</div>
+			<div class="send-form-field"><input id="assetIssue-url" class="assetIssue-input" value="" placeholder="http://..." size="1.2" type="text" maxlength=30></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="assetIssue-form-label">总量:</div>
+			<div class="send-form-field"><input id="assetIssue-supply" class="assetIssue-input" value="100000" size="1.2" type="number"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="assetIssue-form-label">单价(TRX):</div>
+			<div class="send-form-field"><input id="assetIssue-price" class="assetIssue-input" value="1" size="1.2" type="number"></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="assetIssue-form-label">开始日期:</div>
+			<div class="send-form-field"><input id="assetIssue-start" class="assetIssue-input" ></div>
+		</div>
+		<div class="asset-form-row">
+			<div class="assetIssue-form-label">截止日期:</div>
+			<div class="send-form-field"><input id="assetIssue-end" class="assetIssue-input" ></div>
+		</div>
+		
 		<div class="send-form-row">
-			<span class="error-tips" id="freeze-error-tips">Fail!</span>
+			<div class="assetIssue-form-label">附加描述:</div>
+			<div class="send-form-field"><textarea id="assetIssue-desc" type="text" class="asset_btn" maxlength=100></textarea></div>
 		</div>
-		<button class="submit-btn" id="freeze-btn">OK</button>
+		<button class="assetIssue-btn" id="asset-issue-btn" >确定</button>
 	</div>  
 </section>
 <section id="asset-pushsetting-section" class="section settings-section float-section ">
   <header class="float-section-header">
     <a view-ref="back" class="back-btn" id="asset-pushsetting-back"><img src="/static/imgs/popup/arrow-left.png"></a>
-    Push Setting
+    推送设置
   </header>
   <ul class="setting-items-list">
 	<li class="setting-li on">
-      <span class="text">market push</span>
+      <span class="text">行情推送</span>
       <div class="checkbox">
-        <input type="checkbox" class="toggle">
+        <input type="checkbox" class="toggle" id="marketSwitch">
         <label class="label"></label>
       </div>
     </li>
 	<li class="setting-li on">
-      <span class="text">news push</span>
+      <span class="text">快讯推送</span>
       <div class="checkbox">
-        <input type="checkbox" class="toggle">
+        <input type="checkbox" class="toggle" id="newsSwitch">
         <label class="label"></label>
       </div>
     </li>

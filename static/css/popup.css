@@ -1607,6 +1607,9 @@ button {
   user-select: none;
   cursor: pointer;
 }
+#settings-tab-content .cell:hover {
+  background: #F7F7F7;
+}
 #settings-tab-content .cell:active {
   background-color: #f5f5f5;
 }
@@ -2366,17 +2369,60 @@ button {
     flex: 1 0 auto;
     justify-content: space-between;
 }
+.asset-form-row{
+	margin: 6px 18px 6px;
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    flex: 1 0 auto;
+    justify-content: space-between;
+}
+.vote-remain-row{
+	text-align:center;
+}
+.vote-tip-row{
+	margin: 10px 18px 5px;
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    flex: 1 0 auto;
+    justify-content: space-between;
+}
 .send-form-label{
 	color: #5d5d5d;
     font-family: Roboto;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
     width: 88px;
     font-weight: 400;
+	margin-top:12px;
+}
+.asset-form-label{
+	color: #5d5d5d;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 22px;
+    width: 100px;
+    font-weight: 400;
+	margin-top:12px;
+}
+.assetIssue-form-label{
+	color: #5d5d5d;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 22px;
+    width: 100px;
+    font-weight: 400;
+	margin-top:6px;
 }
 .send-form-field{
 	width: 100%;
     position: relative;
+}
+.asset-form-field{
+	width: 100%;
+    position: relative;
+	margin-top:12px;
 }
 .form-input{
 	height: 54px;
@@ -2390,6 +2436,21 @@ button {
     font-size: 16px;
     line-height: 21px;
     font-weight: 300;
+}
+.assetIssue-input{
+    width: 100%;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #4d4d4d;
+    padding: 7px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 300;
+}
+.asset_btn{
+	width:100%;
+	height:60px;
 }
 .form-control {
   display: block;
@@ -2429,6 +2490,38 @@ button {
 	font-weight:bold;
 	font-size:16px;
 }
+.assetIssue-btn{
+	background-color: #3385ff;
+    width: 200px;
+    height: 50px;
+    margin-left: 65px;
+	border-radius:5px;
+	color:#fff;
+	font-weight:bold;
+	font-size:16px;
+}
+.vote-btn{
+	margin-bottom:6px;
+	border: 1px solid transparent;
+	color: #fff;
+	width:65px;
+	height:30px;
+	margin-left:5px;
+	
+}
+.asset-btn{
+	float:right;
+}
+.vote-btn-ok{
+	background-color: #3385ff;
+}
+
+.btn-reset{
+	background-color: #93C54B;	
+}
+.btn-ok{
+	background-color: #F47C3C;
+}
 .qr-container{
 	padding-top:15px;
 	padding-left:60px;
@@ -2441,6 +2534,11 @@ button {
 	height:150px;
 	width:150px;
 	margin-top:50px;
+}
+.logo-banner-register{
+	height:150px;
+	width:150px;
+	margin-top:15px;
 }
 .large-input{
 	width: 260px;
@@ -2509,7 +2607,6 @@ button {
     border-color: #ffeeba;
 	width:100%;
 	text-align:center;
-	display:none;
 }
 .copy-span{
 	cursor:pointer;
@@ -2613,4 +2710,66 @@ button {
     -webkit-transform: scale(0.9);
     margin-top: .603rem;
 	background: #c4192d;
+}
+.register-desc{
+	text-align:left;
+	margin-left:36px;
+}
+.dropdown{
+	position: absolute;
+    right: 40px;
+    top: 10px;
+	cursor:pointer;
+	color:#aaa;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 5rem;
+    margin: .125rem 0 0;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 0.5rem;
+    clear: both;
+    font-weight: 400;
+    color:#aaa;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+	line-height:32px;
+}
+.dropdown-item:hover {
+  background: #F7F7F7;
+}
+#fetch-news-more{
+	text-align:center;
+	cursor:pointer;
+}
+.vote-input{
+	height: 30px;
+    width: 70px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #4d4d4d;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 300;
+	float:right;
+	padding-right:4px;
 }

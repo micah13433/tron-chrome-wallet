@@ -16,14 +16,9 @@ $(function() {
 	});	
 
 	function getTransactionHistory(asset){
-	  if(asset != "TRX"){
-		  $('#main-section').removeClass("visible");
-		  $("#loading").hide();
-		  $('#asset-detail-section').addClass("visible");
-		  return;
-	  }
 	  var xhr = new XMLHttpRequest();
-	  xhr.open("GET", baseURL + "/wallet/getTransactionHistory?page=1", true);
+	  var extraParam = "&isMainnet=" + window.localStorage.getItem("isMainnet");
+	  xhr.open("GET", baseURL + "/wallet/getTransactionHistory?page=1&assetname=" + asset + extraParam, true);
 	  xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 		  var res = JSON.parse(xhr.responseText);
@@ -36,7 +31,7 @@ $(function() {
 					send = true;
 				}
 				resultHtml += ("<li class=\"trasaction-li\">" + 
-					"<i class=\"fa " + (send?"fa-toggle-left":"fa-toggle-right") + " fa-2x\" style=\"margin-right: 8px;\"></i>" + 
+					"<i class=\"fa " + (send?"fa-toggle-left":"fa-toggle-right") + " fa-2x\" style=\"margin-right: 8px;vertical-align:super;\"></i>" + 
 					"<div class=\"history-desc\"><span class=\"history-address\">" + format(res.list[i].sender,8) + "</span><br/><span class=\"history-time\">" + res.list[i].time + "</span></div>" + 
 					"<div class=\"history-right " + (send?"send":"receive") + "\">" + (send?"-":"+") + res.list[i].amount + "</div></li>");
 			}
